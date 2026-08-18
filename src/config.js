@@ -15,11 +15,11 @@ export const BOT_NAME = "Renen";
 
 // LID do bot.
 // Para obter o LID do bot, use o comando /meulid respondendo em cima de uma mensagem do bot.
-export const BOT_LID = "SEU_LID_AQUI@lid";
+export const BOT_LID = "5583991534841@lid";
 
 // LID do dono do bot.
 // Para obter o LID do dono, use o comando /meulid no grupo.
-export const OWNER_LID = "SEU_LID_AQUI@lid";
+export const OWNER_LID = "5583991534841@lid";
 
 // Diretório dos comandos
 export const COMMANDS_DIR = path.join(__dirname, "commands");
