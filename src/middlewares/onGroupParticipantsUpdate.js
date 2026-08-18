@@ -105,10 +105,20 @@ export async function onGroupParticipantsUpdate({
 
         if (hasMemberMention) {
           const userNumber = onlyNumbers(userLid);
+          let mentionId = userLid;
+
+          try {
+            const meta = await socket.groupMetadata(remoteJid);
+            const participant = meta.participants?.find(
+              (p) => onlyNumbers(p.id) === userNumber || onlyNumbers(p.lid) === userNumber,
+            );
+            if (participant?.id) mentionId = participant.id;
+          } catch {}
+
           const finalWelcomeMessage = welcomeText.replace("@member", `@${userNumber}`);
           await socket.sendMessage(remoteJid, {
             text: finalWelcomeMessage,
-            mentions: [userLid],
+            mentions: [mentionId],
           });
         } else {
           await socket.sendMessage(remoteJid, { text: welcomeText });
@@ -120,10 +130,20 @@ export async function onGroupParticipantsUpdate({
 
       if (hasMemberMention) {
         const userNumber = onlyNumbers(userLid);
+        let mentionId = userLid;
+
+        try {
+          const meta = await socket.groupMetadata(remoteJid);
+          const participant = meta.participants?.find(
+            (p) => onlyNumbers(p.id) === userNumber || onlyNumbers(p.lid) === userNumber,
+          );
+          if (participant?.id) mentionId = participant.id;
+        } catch {}
+
         const finalExitMessage = exitText.replace("@member", `@${userNumber}`);
         await socket.sendMessage(remoteJid, {
           text: finalExitMessage,
-          mentions: [userLid],
+          mentions: [mentionId],
         });
       } else {
         await socket.sendMessage(remoteJid, { text: exitText });
