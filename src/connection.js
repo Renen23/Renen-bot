@@ -88,7 +88,7 @@ export async function connect() {
     version,
     logger,
     defaultQueryTimeoutMs: undefined,
-    retryRequestDelayMs: 5000,
+    retryRequestDelayMs: 1000,
     auth: state,
     shouldIgnoreJid: (jid) =>
       isJidBroadcast(jid) || isJidStatusBroadcast(jid) || isJidNewsletter(jid),

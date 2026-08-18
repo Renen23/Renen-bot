@@ -34,7 +34,7 @@ export const ASSETS_DIR = path.resolve(__dirname, "..", "assets");
 export const TEMP_DIR = path.resolve(__dirname, "..", "assets", "temp");
 
 // Timeout em milissegundos por evento (evita banimento).
-export const TIMEOUT_IN_MILLISECONDS_BY_EVENT = 500;
+export const TIMEOUT_IN_MILLISECONDS_BY_EVENT = 100;
 
 // Caso queira responder apenas um grupo específico,
 // coloque o ID dele na configuração abaixo.
