@@ -101,7 +101,8 @@ export async function onGroupParticipantsUpdate({
 
       if (isActiveWelcomeGroup(remoteJid)) {
         const welcomeText = getWelcomeMessage(remoteJid) || welcomeMessage;
-        const hasMemberMention = welcomeText.includes("@member");
+        const cleanText = welcomeText.replace(/[\u200B-\u200D\uFEFF]/g, "");
+        const hasMemberMention = cleanText.includes("@member");
 
         if (hasMemberMention) {
           const userNumber = onlyNumbers(userLid);
@@ -115,7 +116,7 @@ export async function onGroupParticipantsUpdate({
             if (participant?.id) mentionId = participant.id;
           } catch {}
 
-          const finalWelcomeMessage = welcomeText.replace("@member", `@${userNumber}`);
+          const finalWelcomeMessage = cleanText.replace(/@member/g, `@${userNumber}`);
           await socket.sendMessage(remoteJid, {
             text: finalWelcomeMessage,
             mentions: [mentionId],
@@ -126,7 +127,8 @@ export async function onGroupParticipantsUpdate({
       }
     } else if (action === "remove" && isActiveExitGroup(remoteJid)) {
       const exitText = getExitMessage(remoteJid) || exitMessage;
-      const hasMemberMention = exitText.includes("@member");
+      const cleanExit = exitText.replace(/[\u200B-\u200D\uFEFF]/g, "");
+      const hasMemberMention = cleanExit.includes("@member");
 
       if (hasMemberMention) {
         const userNumber = onlyNumbers(userLid);
@@ -140,7 +142,7 @@ export async function onGroupParticipantsUpdate({
           if (participant?.id) mentionId = participant.id;
         } catch {}
 
-        const finalExitMessage = exitText.replace("@member", `@${userNumber}`);
+        const finalExitMessage = cleanExit.replace(/@member/g, `@${userNumber}`);
         await socket.sendMessage(remoteJid, {
           text: finalExitMessage,
           mentions: [mentionId],
